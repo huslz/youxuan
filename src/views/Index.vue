@@ -406,7 +406,6 @@ a{
   }
 }
 .el-main{
-  background #19AA8D
 }
 .aside-nav{
   width: 220px !important

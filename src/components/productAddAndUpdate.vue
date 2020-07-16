@@ -64,7 +64,7 @@
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button @click="$refs[productForm].resetFields()">重置</el-button>
+          <el-button @click="$refs['productForm'].resetFields()">重置</el-button>
           <el-button type="primary" @click="handleSubmit"
             ><a v-if="!type">确定添加</a><a v-else>确定修改</a></el-button
           >

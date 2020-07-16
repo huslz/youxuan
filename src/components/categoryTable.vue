@@ -32,11 +32,11 @@ export default {
   props: {
     type: Number,
     data: Array,
-    size: Number
+    size: Number,
+    loading: Boolean
   },
   data() {
     return {
-      loading: true
     };
   },
   computed: {
@@ -46,7 +46,7 @@ export default {
   },
   watch: {
     categoryData(val) {
-      if (val) this.loading = false;
+      if (val) this.$emit("loaded");
     }
   },
   methods: {

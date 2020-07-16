@@ -11,8 +11,10 @@
         :type="type"
         :data="categoryData"
         :size="TotalPageSize"
+        :loading="loading"
         @handleSecond="handleSecond"
         @handleUpdate="handleUpdate"
+        @loaded="loading = false"
       >
       </category-table>
       <el-pagination
@@ -85,6 +87,7 @@ export default {
   name: "category",
   data() {
     return {
+      loading: true,
       type: 0,
       TotalPageSize: null,
       pageNum: 1,
@@ -115,6 +118,7 @@ export default {
         .getCategory(this.id, this.pageNum, this.pageSize)
         .then(res => {
           if (!res.data.status) {
+            this.loading = false;
             this.paginationDisabled = false;
             this.TotalPageSize = (res.data.data.total / this.pageSize) * 10;
             this.categoryData = res.data.data.list;
@@ -122,7 +126,6 @@ export default {
         })
         .catch(() => {
           this.$message.error("服务器错误!");
-          this.paginationDisabled = false;
         });
     },
     handleSecond(data) {
@@ -145,6 +148,8 @@ export default {
       this.getCategoryData();
     },
     handleCurrentChange(val) {
+      console.log(11);
+      this.loading = true;
       this.secondPageNum = val;
       this.paginationDisabled = true;
       this.getCategoryData();

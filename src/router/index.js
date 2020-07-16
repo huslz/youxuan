@@ -2,10 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
-const routerPush = VueRouter.prototype.push;
-VueRouter.prototype.replace = function replace(location) {
-  return routerPush.call(this, location).catch(error => error);
-};
+// const routerPush = VueRouter.prototype.push;
+// VueRouter.prototype.replace = function replace(location) {
+//   return routerPush.call(this, location).catch(error => error);
+// };
 const routes = [
   {
     path: "/",
@@ -16,13 +16,13 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("../views/Login.vue")
+    component: (resolve) => require(["../views/Login.vue"],resolve)
   },
   {
     path: "/index",
     redirect: "/home",
     name: "index",
-    component: () => import("../views/Index.vue"),
+    component: (resolve) => require(["../views/Index.vue"],resolve),
     children: [
       {
         path: "/home",
@@ -30,12 +30,12 @@ const routes = [
         meta: {
           keepAlive: true
         },
-        component: () => import("../views/home.vue")
+        component: (resolve) => require(["../views/home.vue"],resolve)
       },
       {
         path: "/category",
         name: "category",
-        component: () => import("../views/category.vue"),
+        component: (resolve) => require(["../views/category.vue"],resolve),
         meta: {
           keepAlive: true
         }
@@ -46,7 +46,7 @@ const routes = [
         meta: {
           keepAlive: true
         },
-        component: () => import("../views/product.vue")
+        component: (resolve) => require(["../views/product.vue"],resolve)
       },
       {
         path: "/spec",
@@ -54,7 +54,7 @@ const routes = [
         meta: {
           keepAlive: true
         },
-        component: () => import("../views/spec.vue")
+        component: (resolve) => require(["../views/spec.vue"],resolve)
       },
       {
         path: "/user",
@@ -62,7 +62,7 @@ const routes = [
         meta: {
           keepAlive: true
         },
-        component: () => import("../views/user.vue")
+        component: (resolve) => require(["../views/user.vue"],resolve)
       },
       {
         path: "/role",
@@ -70,7 +70,7 @@ const routes = [
         meta: {
           keepAlive: true
         },
-        component: () => import("../views/role.vue")
+        component: (resolve) => require(["../views/role.vue"],resolve)
       },
       {
         path: "/order",
@@ -78,13 +78,13 @@ const routes = [
         meta: {
           keepAlive: true
         },
-        component: () => import("../views/order.vue")
+        component: (resolve) => require(["../views/order.vue"],resolve)
       }
     ]
   },
   {
     path: "*",
-    component: () => import("../views/notFound.vue")
+    component: (resolve) => require(["../views/notFound.vue"],resolve)
   }
 ];
 

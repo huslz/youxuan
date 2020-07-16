@@ -99,6 +99,7 @@ export default {
         });
     },
     handleCurrentChange(val) {
+      this.loading = true;
       this.pageNum = val;
       this.paginationDisabled = true;
       this.isSearch && this.searchKey
@@ -106,6 +107,7 @@ export default {
         : this.getProductData();
     },
     selectOperation() {
+      this.loading = true;
       this.paginationDisabled = true;
       if(this.paramsChange){
         this.pageNum = 1;

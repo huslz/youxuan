@@ -84,7 +84,7 @@ export default {
           { required: true, message: "请输入角色名称", trigger: "blur" }
         ]
       },
-      paginationDisabled:false
+      paginationDisabled: true
     };
   },
   methods: {
@@ -94,6 +94,7 @@ export default {
         .then(res => {
           if (!res.data.status) {
             this.loading = false;
+            this.paginationDisabled = false;
             this.TotalPageSize =
               (res.data.data.roles.length / this.pageSize) * 10;
             this.roleData = res.data.data.roles;

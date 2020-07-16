@@ -61,7 +61,7 @@ export default {
       dialogData: {},
       type: 0,
       dialogTitle: "添加规格",
-      paginationDisabled:false
+      paginationDisabled: false
     };
   },
   components: {
@@ -90,6 +90,7 @@ export default {
         .then(res => {
           if (!res.data.status) {
             this.paginationDisabled = false;
+            this.loading = false;
             this.specData = res.data.data;
             this.TotalPageSize = (res.data.data.total / this.pageSize) * 10;
           } else this.$message.error(res.data.msg);
@@ -99,11 +100,13 @@ export default {
         });
     },
     handleCurrentChange(val) {
+      this.loading = true;
       this.paginationDisabled = true;
       this.pageNum = val;
       this.isSearch && this.searchKey ? this.searchSpec() : this.getSpecData();
     },
     selectOperation() {
+      this.loading = true;
       this.paginationDisabled = true;
       this.searchKey ? (this.isSearch = true) : (this.isSearch = false);
       this.$nextTick(() => {

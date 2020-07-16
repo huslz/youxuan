@@ -107,6 +107,7 @@ export default {
       });
     },
     handleCurrentChange(val) {
+      this.loading = true;
       this.paginationDisabled = true;
       this.pageNum = val;
       this.getUserList();

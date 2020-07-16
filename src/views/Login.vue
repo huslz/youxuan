@@ -5,7 +5,7 @@
       <div class="title">
         登陆
       </div>
-      <el-form :model="loginForm" :rules="rules" ref="loginForm">
+      <el-form :model="loginForm" :rules="rules" ref="loginForm" :disabled="showLoading">
         <el-form-item prop="account">
           <div class="account">
             <label for="account" class="item"
@@ -52,16 +52,19 @@
         <el-button type="primary" @click="handleLogin">登陆</el-button>
       </div>
     </div>
+    <loading v-if="showLoading"></loading>
   </div>
 </template>
 
 <script>
 import api from "../api/login";
+import loading from "../components/loading";
 export default {
   name: "Login",
   data() {
     return {
       code: "",
+      showLoading:false,
       isChecked: false,
       loginForm: {
         account: "",
@@ -75,6 +78,9 @@ export default {
       }
     };
   },
+  components:{
+    loading
+  },
   methods: {
     generateCode() {
       for (let i = 0; i < 4; i++) {
@@ -83,16 +89,19 @@ export default {
       }
     },
     handleLogin() {
+      this.showLoading = true;
       this.$refs["loginForm"].validate(valid => {
         if (valid) {
           this.isChecked = !this.isChecked;
           if(this.code!==this.loginForm.code){
             this.$message.error("验证码错误!");
+            this.showLoading = false;
             return;
           }
           api
             .loginCheck(this.loginForm.account, this.loginForm.password)
             .then(res => {
+              this.showLoading = false;
               if (!res.data.status) {
                 let userData = {};
                 userData.username = res.data.data.username;
@@ -101,7 +110,7 @@ export default {
                 localStorage.setItem("userData", JSON.stringify(userData));
                 this.$router.replace("/index");
               } else {
-                this.$message(res.data.msg);
+                this.$message.error(res.data.msg);
               }
             })
             .catch(() => {

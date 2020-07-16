@@ -1,19 +1,39 @@
 <template>
   <div id="app">
+    <loading v-if="showLoading"></loading>
     <router-view />
   </div>
 </template>
-
+<script>
+import loading from "./components/loading";
+import { mapGetters } from "vuex";
+export default {
+  data() {
+    return {};
+  },
+  watch: {
+  },
+  created() {
+    document.body.removeChild(document.getElementById("load-container"));
+  },
+  components: {
+    loading
+  },
+  computed: {
+    ...mapGetters(["showLoading"])
+  }
+};
+</script>
 <style lang="scss">
 * {
   margin: 0;
   padding: 0;
 }
-html{
+html {
   height: 100%;
   overflow: hidden;
 }
-body{
+body {
   height: 100%;
   overflow: hidden;
 }
